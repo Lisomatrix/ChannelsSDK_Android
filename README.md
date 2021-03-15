@@ -1,4 +1,4 @@
-# Android SDK
+# Channels Android SDK
 
 Check the main project [here](https://lisomatrix.github.io/Channels)
 
