@@ -1,5 +1,7 @@
 # Android SDK
 
+Check the main project [here](Check the docs here: https://lisomatrix.github.io/Channels)
+
 If you want to connect to **channels** with your devices, then this is the right place for you!<br>
 First get the code from [here](https://github.com/Lisomatrix/ChannelsSDK_Android) and check the authentication section for creating a `JWT Token`.<br>
 
