@@ -14,7 +14,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 public class ApiClient {
 
-    private static final String API_BASE_URL = "http://192.168.1.2:8090";
+    private static String API_BASE_URL = "http://192.168.1.2:8090";
 
     private static final HttpLoggingInterceptor m_interceptor = new HttpLoggingInterceptor();
 
@@ -23,6 +23,12 @@ public class ApiClient {
             .client(getClient())
             .baseUrl(API_BASE_URL)
             .addConverterFactory(GsonConverterFactory.create());
+
+    public static void init(String wsURL) {
+        String url = wsURL.replace("ws://", "http://");
+        url = wsURL.replace("wss://", "https://");
+        API_BASE_URL = url;
+    }
 
     public static OkHttpClient getClient() {
         m_interceptor.level(HttpLoggingInterceptor.Level.BASIC);
