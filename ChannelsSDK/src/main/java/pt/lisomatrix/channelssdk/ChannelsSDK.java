@@ -26,28 +26,6 @@ public class ChannelsSDK {
         if (m_instance == null) {
             m_instance = new ChannelsSDK(context.getApplicationContext(), url, appID, token);
         }
-
-        HashMap<String, String> headers = new HashMap<>();
-        headers.put("AppID", appID);
-        headers.put("Authorization", token);
-        ChannelsWebSocketListener channelsWS = ChannelsWebSocketListener.create("ws://192.168.1.2:8090/optimized", headers);
-
-        ByteString payload = Channels
-                .PublishRequest
-                .newBuilder()
-                .setChannelID("123")
-                .setPayload("Test_Payload")
-                .build()
-                .toByteString();
-
-        Channels.NewEvent newEvent = Channels
-                .NewEvent
-                .newBuilder()
-                .setPayload(payload)
-                .setType(Channels.NewEvent.NewEventType.PUBLISH)
-                .build();
-
-        channelsWS.sendNewEvent(newEvent);
     }
 
     public static ChannelsSDK getInstance() {
