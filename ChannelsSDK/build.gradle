@@ -1,6 +1,28 @@
-plugins {
-    id 'com.android.library'
+allprojects {
+    repositories {
+        google()
+        mavenCentral()
+        jcenter() // Warning: this repository is going to shut down soon
+    }
 }
+
+
+buildscript {
+
+    repositories {
+        google()
+        mavenCentral()
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:4.1.0'
+
+        // NOTE: Do not place your application dependencies here; they belong
+        // in the individual module build.gradle files
+    }
+}
+
+apply plugin: 'com.android.library'
 
 android {
     compileSdkVersion 30
@@ -29,10 +51,6 @@ android {
 }
 
 dependencies {
-
-    testImplementation 'junit:junit:4.+'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.2'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 
     // Network
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
