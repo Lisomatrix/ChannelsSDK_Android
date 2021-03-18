@@ -10,10 +10,15 @@ import pt.lisomatrix.channelssdk.network.client.ClientService;
 
 public class ChannelsSDK {
 
-    public static void initialize(String url, String appID, String token) {
+    public static void initialize(String url, String appID) {
         if (m_instance == null) {
-            m_instance = new ChannelsSDK(url, appID, token);
+            m_instance = new ChannelsSDK(url, appID);
         }
+    }
+
+    public static void connect(String token) {
+        m_instance.setToken(token);
+        ChannelsHandler.init();
     }
 
     private static ChannelsSDK m_instance;
@@ -23,20 +28,23 @@ public class ChannelsSDK {
     }
 
     private final String m_appID;
-    private final String m_token;
+    private String m_token;
     private final String m_url;
 
     private final ChannelService m_channelService;
     private final ClientService m_clientService;
 
-    private ChannelsSDK(String url, String appID, String token) {
+    private ChannelsSDK(String url, String appID) {
         this.m_appID = appID;
-        this.m_token = token;
         this.m_url = url + "/optimized";
 
         this.m_channelService = new ChannelService();
         this.m_clientService = new ClientService();
         ApiClient.init(url);
+    }
+
+    private void setToken(String token) {
+        this.m_token = token;
     }
 
     public ClientService getClientService() {

@@ -20,7 +20,7 @@ public class ChannelsHandler implements AckListener, ChannelEventListener {
 
     private static ChannelsHandler m_instance;
 
-    private final ChannelsWebSocketListener m_webSocket;
+    private ChannelsWebSocketListener m_webSocket;
 
     private final ConcurrentHashMap<String, Channel> m_channels = new ConcurrentHashMap<>();
     private final ConcurrentHashMap<Integer, String> m_waitingAck = new ConcurrentHashMap<>();
@@ -29,20 +29,21 @@ public class ChannelsHandler implements AckListener, ChannelEventListener {
 
     private ChannelsListener m_channelsListener;
 
-    private ChannelsHandler() {
+    private ChannelsHandler() {}
 
+    public static void init() {
         ChannelsSDK channelsSDK = ChannelsSDK.getInstance();
 
         HashMap<String, String> headers = new HashMap<>();
         headers.put(APP_ID, channelsSDK.getAppID());
         headers.put(AUTHORIZATION, channelsSDK.getToken());
 
-        this.m_webSocket = ChannelsWebSocketListener.create(
+        m_instance.m_webSocket = ChannelsWebSocketListener.create(
                 channelsSDK.getURL(),
                 headers
         );
-        m_webSocket.setAckListener(this);
-        m_webSocket.setEventListener(this);
+        m_instance.m_webSocket.setAckListener(m_instance);
+        m_instance.m_webSocket.setEventListener(m_instance);
     }
 
     public void setChannelsListener(ChannelsListener channelsListener) {
