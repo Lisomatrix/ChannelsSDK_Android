@@ -168,7 +168,14 @@ public class Channel {
     }
 
     public static Channel fromChannelInfo(ChannelInfo channelInfo) {
-        Channel channel = new Channel(channelInfo);
+
+        Channel channel = ChannelsHandler.getInstance().getChannel(channelInfo.getId());
+
+        if (channel != null) {
+            return channel;
+        }
+
+        channel = new Channel(channelInfo);
         ChannelsHandler.getInstance().registerChannel(channel);
 
         return channel;

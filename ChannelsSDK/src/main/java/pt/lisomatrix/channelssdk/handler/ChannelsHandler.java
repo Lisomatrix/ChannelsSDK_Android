@@ -32,6 +32,7 @@ public class ChannelsHandler implements AckListener, ChannelEventListener {
     private ChannelsHandler() {}
 
     public static void init() {
+        ChannelsHandler.getInstance(); // m_instance could be null
         ChannelsSDK channelsSDK = ChannelsSDK.getInstance();
 
         HashMap<String, String> headers = new HashMap<>();

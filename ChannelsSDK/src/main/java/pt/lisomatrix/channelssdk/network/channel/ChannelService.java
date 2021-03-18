@@ -4,6 +4,8 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 
+import pt.lisomatrix.channelssdk.handler.Channel;
+import pt.lisomatrix.channelssdk.model.ChannelInfo;
 import pt.lisomatrix.channelssdk.network.ApiClient;
 import pt.lisomatrix.channelssdk.network.callback.ChannelActionCallback;
 import pt.lisomatrix.channelssdk.network.callback.GetChannelEventsCallback;
@@ -178,10 +180,15 @@ public class ChannelService {
                 .enqueue(new Callback<GetChannelsResponse>() {
                     @Override
                     public void onResponse(@NotNull Call<GetChannelsResponse> call, @NotNull Response<GetChannelsResponse> response) {
-                        if (response.code() == 200 && response.body() != null)
+                        if (response.code() == 200 && response.body() != null) {
+                            for (ChannelInfo info : response.body().getChannels()) {
+                                Channel.fromChannelInfo(info);
+                            }
                             channelsCallback.onSuccess(response.body().getChannels());
-                        else
+                        } else {
                             channelsCallback.onSuccess(new ArrayList<>());
+                        }
+
                     }
 
                     @Override
@@ -197,10 +204,18 @@ public class ChannelService {
                 .enqueue(new Callback<GetChannelsResponse>() {
                     @Override
                     public void onResponse(@NotNull Call<GetChannelsResponse> call, @NotNull Response<GetChannelsResponse> response) {
-                        if (response.code() == 200 && response.body() != null)
+
+                        if (response.code() == 200 && response.body() != null) {
                             channelsCallback.onSuccess(response.body().getChannels());
-                        else
+
+                            for (ChannelInfo info : response.body().getChannels()) {
+                                Channel.fromChannelInfo(info);
+                            }
+
+                        } else {
                             channelsCallback.onSuccess(new ArrayList<>());
+                        }
+
                     }
 
                     @Override
